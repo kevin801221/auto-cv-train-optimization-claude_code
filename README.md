@@ -89,12 +89,6 @@ uv run autocv all -c configs/wafer.yaml --yes
 
 這些不會發 PR 公告。**上線那天，只有 Watch / ⭐ 的人會被 ping 到，並拿到駕駛艙 beta 的早鳥邀請。**
 Not announced anywhere. The day it ships, **only watchers get pinged — and first dibs on the cockpit beta.**
-
-> 按 **Watch / ⭐** 不是幫我，是替**未來的你**留一張早鳥票。
-> 錯過上線那波，後面就是排隊。
-
-如果這個 repo 幫你省下一個週末，那顆星會告訴我：值得把駕駛艙做得更快、開放更多名額。
-
 ---
 
 ## 架構 / Architecture
