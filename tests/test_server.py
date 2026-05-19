@@ -90,3 +90,57 @@ def test_build_real_stages_shape():
         s for s in build_stages(cfg, Path.cwd(), optimize=False) if s.name == "train"
     )
     assert train.estimate is not None
+
+
+from fastapi.testclient import TestClient
+
+from autocv.server.app import create_app
+
+
+def _fake_factory():
+    def factory(config: str, optimize: bool):
+        return PipelineRunner([Stage("data", lambda emit: None)])
+
+    return factory
+
+
+def _blocking_factory():
+    # "train" 屬 GATED：runner 會卡在 _gate.wait()，未 confirm 前狀態恆為 running，
+    # 用來確定性測 409（不靠 sleep / 時間競態）。
+    def factory(config: str, optimize: bool):
+        return PipelineRunner([Stage("train", lambda emit: None, estimate=lambda: 0.0)])
+
+    return factory
+
+
+def test_configs_endpoint_lists_yaml():
+    c = TestClient(create_app(runner_factory=_fake_factory()))
+    r = c.get("/configs")
+    assert r.status_code == 200
+    assert "configs/wafer.yaml" in r.json()["configs"]
+
+
+def test_index_served():
+    c = TestClient(create_app(runner_factory=_fake_factory()))
+    r = c.get("/")
+    assert r.status_code == 200
+    assert 'id="stages"' in r.text and "cockpit" in r.text.lower()
+
+
+def test_run_then_double_run_409():
+    c = TestClient(create_app(runner_factory=_blocking_factory()))
+    assert c.post("/run", json={"config": "configs/wafer.yaml"}).status_code == 200
+    assert c.post("/run", json={"config": "configs/wafer.yaml"}).status_code == 409
+
+
+def test_ws_streams_events():
+    c = TestClient(create_app(runner_factory=_fake_factory()))
+    c.post("/run", json={"config": "configs/wafer.yaml"})
+    with c.websocket_connect("/ws") as ws:
+        kinds = []
+        for _ in range(10):
+            msg = ws.receive_json()
+            kinds.append(msg["kind"])
+            if msg["kind"] == "done":
+                break
+    assert "done" in kinds
