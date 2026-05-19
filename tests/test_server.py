@@ -144,3 +144,15 @@ def test_ws_streams_events():
             if msg["kind"] == "done":
                 break
     assert "done" in kinds
+
+
+from typer.testing import CliRunner
+
+from autocv.cli import app as cli_app
+
+
+def test_cli_has_ui_command():
+    r = CliRunner().invoke(cli_app, ["--help"])
+    assert r.exit_code == 0 and "ui" in r.output
+    r2 = CliRunner().invoke(cli_app, ["ui", "--help"])
+    assert r2.exit_code == 0 and "--no-browser" in r2.output

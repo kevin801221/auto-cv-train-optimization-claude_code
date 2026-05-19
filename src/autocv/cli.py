@@ -99,5 +99,26 @@ def all(
     do_infer(cfg, root)
 
 
+@app.command()
+def ui(
+    config: str = ConfigOpt,
+    host: str = typer.Option("127.0.0.1", help="綁定 host"),
+    port: int = typer.Option(8787, help="綁定 port"),
+    no_browser: bool = typer.Option(False, "--no-browser", help="不自動開瀏覽器"),
+) -> None:
+    """開本機視覺駕駛艙（瀏覽器）。"""
+    import uvicorn
+
+    from autocv.server.app import create_app
+
+    if not no_browser:
+        import threading
+        import webbrowser
+
+        threading.Timer(1.2, lambda: webbrowser.open(f"http://{host}:{port}")).start()
+    typer.echo(f"cockpit -> http://{host}:{port}（Ctrl+C 結束）")
+    uvicorn.run(create_app(), host=host, port=port, log_level="warning")
+
+
 if __name__ == "__main__":
     app()
