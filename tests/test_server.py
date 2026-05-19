@@ -73,3 +73,20 @@ def test_runner_error_emits_error_event():
 
 def test_gated_constant():
     assert "train" in GATED and "optimize" in GATED
+
+
+def test_build_real_stages_shape():
+    from pathlib import Path
+
+    from autocv.config import load_config
+    from autocv.server.real_stages import build_stages
+
+    cfg = load_config(Path("configs/wafer.yaml"))
+    names = [s.name for s in build_stages(cfg, Path.cwd(), optimize=False)]
+    assert names == ["data", "split", "train", "infer"]
+    opt = [s.name for s in build_stages(cfg, Path.cwd(), optimize=True)]
+    assert opt == ["data", "split", "optimize", "infer"]
+    train = next(
+        s for s in build_stages(cfg, Path.cwd(), optimize=False) if s.name == "train"
+    )
+    assert train.estimate is not None
