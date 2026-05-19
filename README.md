@@ -96,6 +96,7 @@ uv run autocv ui          # 開瀏覽器，零指令
 
 這些不會發 PR 公告。**上線那天，只有 Watch / ⭐ 的人會被 ping 到，並拿到駕駛艙 beta 的早鳥邀請。**
 Not announced anywhere. The day it ships, **only watchers get pinged — and first dibs on the cockpit beta.**
+
 ---
 
 ## 架構 / Architecture
