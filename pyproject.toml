@@ -14,10 +14,12 @@ dependencies = [
     "ultralytics>=8.4.48",
     "matplotlib>=3.8",
     "Pillow>=10.0",
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "ruff>=0.6"]
+dev = ["pytest>=8.0", "ruff>=0.6", "httpx>=0.27"]
 
 [project.scripts]
 autocv = "autocv.cli:app"
