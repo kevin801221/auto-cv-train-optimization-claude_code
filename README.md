@@ -62,6 +62,13 @@ uv run autocv all -c configs/wafer.yaml --yes
 打開 repo，說一句「**幫我下載並訓練這個資料集**」。
 `data-hunter → bbox-labeler → training-runner → hp-optimizer → inference-runner` 五個 agent 自動接力，每一棒交接你都看得到。
 
+**③ 視覺駕駛艙 / Visual cockpit** — 給想用看的人
+
+```bash
+uv run autocv ui          # 開瀏覽器，零指令
+```
+選 config、按 Run，5 階段燈即時接力、訓練曲線即時長、跑完成果圖直接看。train/optimize 前一定先跳預估時間，按確認才開跑。
+
 ---
 
 ## 換成你的資料集 / Bring your own
@@ -82,7 +89,7 @@ uv run autocv all -c configs/wafer.yaml --yes
 
 你現在拿到的是**引擎**。真正的東西還沒開——而且**只給在場的人**：
 
-- 🔒 **無碼視覺駕駛艙**：拖一個資料集、按一個鈕、看 5 個 agent 在畫面上即時接力、訓練曲線即時長出來。零指令。
+- ✅ **無碼視覺駕駛艙**（已上線）：`uv run autocv ui` 開瀏覽器，選 config、按 Run，看 5 階段即時接力、訓練曲線即時長出、跑完看成果圖。
 - 🔒 **一鍵雲端訓練**：本機跑不動就丟雲端，回來拿模型。
 - 🔒 **多資料集競技場**：同時跑 N 個設定，自動排名選最強。
 - 🔒 **模型一鍵打包**：直接吐 CoreML / ONNX，拿去上線。

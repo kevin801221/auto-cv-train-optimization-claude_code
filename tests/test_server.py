@@ -1,4 +1,15 @@
+import time
+from pathlib import Path
+
+from fastapi.testclient import TestClient
+from typer.testing import CliRunner
+
+from autocv.cli import app as cli_app
+from autocv.config import load_config
+from autocv.server.app import create_app
 from autocv.server.events import Event
+from autocv.server.real_stages import build_stages
+from autocv.server.runner import GATED, PipelineRunner, Stage
 
 
 def test_event_to_dict_round_trips():
@@ -14,11 +25,6 @@ def test_event_kinds_constant():
     from autocv.server.events import KINDS
 
     assert {"stage", "log", "metric", "await_confirm", "result", "done"} <= set(KINDS)
-
-
-import time
-
-from autocv.server.runner import GATED, PipelineRunner, Stage
 
 
 def _wait(r, timeout=2.0):
@@ -76,11 +82,6 @@ def test_gated_constant():
 
 
 def test_build_real_stages_shape():
-    from pathlib import Path
-
-    from autocv.config import load_config
-    from autocv.server.real_stages import build_stages
-
     cfg = load_config(Path("configs/wafer.yaml"))
     names = [s.name for s in build_stages(cfg, Path.cwd(), optimize=False)]
     assert names == ["data", "split", "train", "infer"]
@@ -90,11 +91,6 @@ def test_build_real_stages_shape():
         s for s in build_stages(cfg, Path.cwd(), optimize=False) if s.name == "train"
     )
     assert train.estimate is not None
-
-
-from fastapi.testclient import TestClient
-
-from autocv.server.app import create_app
 
 
 def _fake_factory():
@@ -144,11 +140,6 @@ def test_ws_streams_events():
             if msg["kind"] == "done":
                 break
     assert "done" in kinds
-
-
-from typer.testing import CliRunner
-
-from autocv.cli import app as cli_app
 
 
 def test_cli_has_ui_command():
