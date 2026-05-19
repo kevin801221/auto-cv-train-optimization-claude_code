@@ -1,4 +1,4 @@
-# auto-cv-train-inference-optimization
+# 讓 AI Agents 團隊幫您自動訓練電腦視覺模型 - 以 YOLO 模型在 Wafer dataset 圖像為例
 
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
