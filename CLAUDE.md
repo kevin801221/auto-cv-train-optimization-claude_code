@@ -1,4 +1,4 @@
-# auto-cv-train-inference-optimization
+# auto-cv-train-optimization-claude_code
 
 通用 CV 自動訓練模板。改一個 `configs/*.yaml`，一行指令或跟 Claude Code 對話即可跑完整 pipeline。
 

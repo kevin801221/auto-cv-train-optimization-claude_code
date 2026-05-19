@@ -2,8 +2,8 @@
 
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![CI](https://github.com/kevin801221/auto-cv-train-inference-optimization/actions/workflows/ci.yml/badge.svg)](https://github.com/kevin801221/auto-cv-train-inference-optimization/actions)
-[![Stars](https://img.shields.io/github/stars/kevin801221/auto-cv-train-inference-optimization?style=social)](https://github.com/kevin801221/auto-cv-train-inference-optimization/stargazers)
+[![CI](https://github.com/kevin801221/auto-cv-train-optimization-claude_code/actions/workflows/ci.yml/badge.svg)](https://github.com/kevin801221/auto-cv-train-optimization-claude_code/actions)
+[![Stars](https://img.shields.io/github/stars/kevin801221/auto-cv-train-optimization-claude_code?style=social)](https://github.com/kevin801221/auto-cv-train-optimization-claude_code/stargazers)
 
 > **作者 / Author：羅子嘉 (Kevin Luo)** · [@kevin801221](https://github.com/kevin801221)
 
@@ -33,8 +33,8 @@
 ## 30 秒，你也有一個 / 30 seconds to your own
 
 ```bash
-git clone git@github.com:kevin801221/auto-cv-train-inference-optimization.git
-cd auto-cv-train-inference-optimization
+git clone git@github.com:kevin801221/auto-cv-train-optimization-claude_code.git
+cd auto-cv-train-optimization-claude_code
 uv venv --python 3.11 && uv pip install -e .
 cp .env.example .env          # 填 ROBOFLOW_API_KEY
 uv run autocv all -c configs/wafer.yaml --yes

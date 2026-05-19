@@ -1,5 +1,5 @@
 [project]
-name = "auto-cv-train-inference-optimization"
+name = "auto-cv-train-optimization-claude_code"
 version = "0.1.0"
 description = "改一個 YAML，一行指令把任何 Roboflow 資料集自動跑完 下載→驗證切分→訓練→超參優化→推論視覺化。"
 readme = "README.md"
