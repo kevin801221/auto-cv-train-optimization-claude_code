@@ -81,6 +81,27 @@ def test_gated_constant():
     assert "train" in GATED and "optimize" in GATED
 
 
+def test_csv_tail_emits_metric_events(tmp_path):
+    from autocv.server.real_stages import _final_flush, _start_csv_tail
+
+    csv_path = tmp_path / "results.csv"
+    csv_path.write_text(
+        "epoch,metrics/mAP50(B),metrics/mAP50-95(B),train/box_loss\n"
+        "1,0.5,0.3,0.8\n"
+        "2,0.7,0.4,0.6\n"
+    )
+    events: list = []
+    stop, t, seen = _start_csv_tail(csv_path, events.append)
+    time.sleep(1.3)
+    stop.set()
+    t.join(timeout=2)
+    _final_flush(csv_path, events.append, seen)
+    metrics = [e for e in events if e.kind == "metric"]
+    assert len(metrics) >= 2
+    assert metrics[0].payload["epoch"] == 1 and metrics[0].payload["map50"] == 0.5
+    assert metrics[1].payload["epoch"] == 2 and metrics[1].payload["map50"] == 0.7
+
+
 def test_build_real_stages_shape():
     cfg = load_config(Path("configs/wafer.yaml"))
     names = [s.name for s in build_stages(cfg, Path.cwd(), optimize=False)]
