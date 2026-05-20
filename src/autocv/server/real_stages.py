@@ -94,6 +94,7 @@ def build_stages(cfg: Config, root: Path, optimize: bool) -> list[Stage]:
         from autocv.train import train
 
         csv_path = runs_dir / "train" / "results.csv"
+        csv_path.unlink(missing_ok=True)  # 清舊列避免 watcher emit 上一輪歷史
         stop, t, seen = _start_csv_tail(csv_path, emit)
         try:
             _logged(lambda: train(cfg, root, yes=True), emit)
@@ -106,6 +107,7 @@ def build_stages(cfg: Config, root: Path, optimize: bool) -> list[Stage]:
         from autocv.optimize import optimize as do_opt
 
         csv_path = runs_dir / "tune" / "results.csv"
+        csv_path.unlink(missing_ok=True)
         stop, t, seen = _start_csv_tail(csv_path, emit)
         try:
             _logged(lambda: do_opt(cfg, root, yes=True), emit)
