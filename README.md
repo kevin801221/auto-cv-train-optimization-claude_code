@@ -69,6 +69,10 @@ uv run autocv ui          # 開瀏覽器，零指令
 ```
 選 config、按 Run，5 階段燈即時接力、訓練曲線即時長、跑完成果圖直接看。train/optimize 前一定先跳預估時間，按確認才開跑。
 
+![訓練中：5 階段接力 + 訓練曲線即時長 / Training in flight](docs/screenshots/cockpit-training.jpg)
+
+![跑完：成果圖 gallery + mAP 0.9950 / Done: gallery + mAP](docs/screenshots/cockpit-done.jpg)
+
 ---
 
 ## 換成你的資料集 / Bring your own
